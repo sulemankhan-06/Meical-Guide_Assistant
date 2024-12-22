@@ -9,13 +9,14 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-GROQ_API_KEY = os.getenv('GROQ_API_KEY')
+
 # LLM Configuration
 llm = ChatGroq(
-    model="llama-3.3-70b-versatile",
-    max_tokens=10000,
-    temperature=0,
-    timeout= 600,
+    model ="llama-3.3-70b-versatile",
+    max_tokens =10000,
+    api_key = os.getenv('GROQ_API_KEY'),
+    temperature =0,
+    timeout = 600,
     streaming = False
 )
 

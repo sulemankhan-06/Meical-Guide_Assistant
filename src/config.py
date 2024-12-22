@@ -9,7 +9,6 @@ class Config:
     GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 
     EMBED_MODEL = "mistral-embed"
-    CHAT_MODEL = "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo"
 
     CHUNK_SIZE = 1300
     CHUNK_OVERLAP = 200
