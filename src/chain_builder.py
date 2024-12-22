@@ -13,7 +13,6 @@ GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 # LLM Configuration
 llm = ChatGroq(
     model="llama-3.3-70b-versatile",
-    api_key = GROQ_API_KEY,
     max_tokens=10000,
     temperature=0,
     timeout= 600,
