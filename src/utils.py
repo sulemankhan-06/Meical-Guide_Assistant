@@ -4,7 +4,7 @@ from pinecone import ServerlessSpec
 from pinecone import Pinecone
 from langchain_mistralai import MistralAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
-from src.config import Config
+from config import Config
 
 index_name = "med-index"
 

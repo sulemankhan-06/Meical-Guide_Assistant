@@ -1,5 +1,5 @@
 from langchain_together import ChatTogether
-from src.utils import get_vector_store
+from utils import get_vector_store
 from config import Config
 from langchain_core.prompts import MessagesPlaceholder
 from langchain.chains.combine_documents import create_stuff_documents_chain

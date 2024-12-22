@@ -1,6 +1,6 @@
 import streamlit as st
 import time
-from src.chain_builder import rag_query # Import your RAG chain from the main module
+from chain_builder import rag_query # Import your RAG chain from the main module
 
 st.title("Medical Guideline Assistant")
 
