@@ -1,4 +1,4 @@
-from langchain_together import ChatTogether
+from langchain_groq import ChatGroq
 from utils import get_vector_store
 from config import Config
 from langchain_core.prompts import MessagesPlaceholder
@@ -9,12 +9,11 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-TOGETHER_API_KEY = os.getenv('TOGETHER_API_KEY')
 
 # LLM Configuration
-llm = ChatTogether(
-    model= "meta-llama/Llama-3.3-70B-Instruct-Turbo",
-    api_key = TOGETHER_API_KEY,
+llm = ChatGroq(
+    model="llama-3.3-70b-versatile",
+    api_key = Config.GROQ_API_KEY,
     max_tokens=10000,
     temperature=0,
     timeout= 600,
