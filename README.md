@@ -146,8 +146,6 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📞 Contact
+## 👥 Author
 
-Your Name - [@your_twitter](https://twitter.com/your_twitter)
-
-Project Link: [https://github.com/username/medical-guidelines-assistant](https://github.com/username/medical-guidelines-assistant)
+Mohammad Suleman Khan
