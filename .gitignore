@@ -1,0 +1,24 @@
+# Environment
+.env
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+
+# IDEs
+.vscode/
+.idea/
+
+# Project specific
+.faiss_store/
+logs/
+.streamlit/secrets.toml
+Guidelines_Data/
