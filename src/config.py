@@ -8,6 +8,7 @@ class Config:
     MISTRALAI_API_KEY = os.getenv('MISTRALAI_API_KEY')
     PINECONE_API_KEY = os.getenv('PINECONE_API_KEY')
 
+    print(PINECONE_API_KEY)
     LLM_MODEL = "mistral-large-latest"
     EMBED_MODEL = "mistral-embed"
 
