@@ -5,13 +5,12 @@ from pinecone import Pinecone
 from langchain_mistralai import MistralAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from config import Config
-import os 
-
+from dotenv import load_dotenv
+load_dotenv()
 index_name = "med-index"
-api_key = os.getenv("MISTRAL_API_KEY")
 
 def ingest_data():
-    embeddings = MistralAIEmbeddings(model=Config.EMBED_MODEL, api_key = api_key)
+    embeddings = MistralAIEmbeddings(model=Config.EMBED_MODEL, api_key = Config.MISTRALAI_API_KEY)
 
     loader = PyPDFDirectoryLoader(Config.Directory_path)
     docs = loader.load()
@@ -39,8 +38,7 @@ def ingest_data():
 
 
 def get_vector_store():
-    embeddings = MistralAIEmbeddings(model=Config.EMBED_MODEL,
-                                     api_key=Config.MISTRALAI_API_KEY)
+    embeddings = MistralAIEmbeddings(model=Config.EMBED_MODEL, api_key=Config.MISTRALAI_API_KEY)
     pc = Pinecone(api_key=Config.PINECONE_API_KEY)
     index = pc.Index(index_name)
     vector_store = PineconeVectorStore(index=index, embedding=embeddings)
