@@ -5,12 +5,13 @@ from pinecone import Pinecone
 from langchain_mistralai import MistralAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from config import Config
+import os 
 
 index_name = "med-index"
-
+api_key = os.getenv("MISTRAL_API_KEY")
 
 def ingest_data():
-    embeddings = MistralAIEmbeddings(model=Config.EMBED_MODEL, api_key = Config.MISTRALAI_API_KEY)
+    embeddings = MistralAIEmbeddings(model=Config.EMBED_MODEL, api_key = api_key)
 
     loader = PyPDFDirectoryLoader(Config.Directory_path)
     docs = loader.load()
