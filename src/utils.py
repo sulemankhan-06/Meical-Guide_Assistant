@@ -10,8 +10,7 @@ index_name = "med-index"
 
 
 def ingest_data():
-    embeddings = MistralAIEmbeddings(model=Config.EMBED_MODEL,
-                                     api_key=Config.MISTRALAI_API_KEY)
+    embeddings = MistralAIEmbeddings(model=Config.EMBED_MODEL, api_key = Config.MISTRALAI_API_KEY)
 
     loader = PyPDFDirectoryLoader(Config.Directory_path)
     docs = loader.load()
