@@ -1,0 +1,27 @@
+modules = ["python-3.12"]
+run = "streamlit run app.py"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "streamlit run app.py"]
+
+[[ports]]
+localPort = 8501
+externalPort = 80
+
+[workflows]
+
+[[workflows.workflow]]
+name = "Streaming the app"
+mode = "sequential"
+author = 38568921
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd src"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "streamlit run app.py"

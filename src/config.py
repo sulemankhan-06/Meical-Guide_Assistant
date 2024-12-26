@@ -3,11 +3,12 @@ import os
 
 load_dotenv()
 
+
 class Config:
     MISTRALAI_API_KEY = os.getenv('MISTRALAI_API_KEY')
     PINECONE_API_KEY = os.getenv('PINECONE_API_KEY')
-    GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 
+    LLM_MODEL = "mistral-large-latest"
     EMBED_MODEL = "mistral-embed"
 
     CHUNK_SIZE = 1300
@@ -16,7 +17,7 @@ class Config:
     Directory_path = "/Users/user/Desktop/Medical_Guide/Guidelines_Data"
 
     SYSTEM_PROMPT = (
-    ''''You are a specialized Medical Guidelines Assistant powered by large language models and retrieval-augmented generation. Your purpose is to help healthcare practitioners quickly access, interpret, and apply complex medical guidelines in their clinical practice.
+        ''''You are a specialized Medical Guidelines Assistant powered by large language models and retrieval-augmented generation. Your purpose is to help healthcare practitioners quickly access, interpret, and apply complex medical guidelines in their clinical practice.
 
     Core Functions:
     1. Provide rapid, accurate responses to clinical guideline queries based on the context
@@ -53,17 +54,13 @@ class Config:
     2. Highlight emergency situations requiring immediate care
     3. Note when in-person assessment is crucial
     4. Specify limitations of the guidance provided'''
-
-    "\n\n"
-    "{context}"
-    )
-
+        "\n\n"
+        "{context}")
 
     CONTEXTUALIZE_Q_PROMPT = (
-    "Given a chat history and the latest user question "
-    "which might reference context in the chat history, "
-    "formulate a standalone question which can be understood "
-    "without the chat history. Do NOT answer the question, "
-    "just reformulate it if needed and otherwise return it as is."
+        "Given a chat history and the latest user question "
+        "which might reference context in the chat history, "
+        "formulate a standalone question which can be understood         "
+        "without the chat history. Do NOT answer the question, "
+        "just reformulate it if needed and otherwise return it            as is."
     )
-
