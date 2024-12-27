@@ -2,7 +2,7 @@ from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
-from src.chain_builder import rag_query
+from chain_builder import rag_query
 import json
 
 app = FastAPI()
@@ -10,7 +10,7 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure based on your frontend URL
+    allow_origins=["http://localhost:5173"],  # Configure based on your frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

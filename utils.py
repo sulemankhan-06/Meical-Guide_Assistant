@@ -4,7 +4,7 @@ from langchain_mistralai import MistralAIEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from qdrant_client import QdrantClient
 from qdrant_client.http.models import Distance, VectorParams
-from src.config import Config
+from config import Config
 from dotenv import load_dotenv
 
 load_dotenv()
