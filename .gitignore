@@ -1,4 +1,4 @@
-# Environment
+# Environment variables and virtual environments
 .env
 venv/
 env/
@@ -6,19 +6,28 @@ env/
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
 *.so
-.Python
-build/
-dist/
 *.egg-info/
+dist/
+build/
 
-# IDEs
+# IDE
 .vscode/
 .idea/
+.DS_Store
 
 # Project specific
-.faiss_store/
-logs/
-.streamlit/secrets.toml
 Guidelines_Data/
+*.pdf
+model_cache/
+
+# Logs
+logs/
+*.log
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
