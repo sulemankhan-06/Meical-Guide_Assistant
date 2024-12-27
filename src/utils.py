@@ -1,13 +1,14 @@
 from langchain_community.document_loaders import PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from pinecone import ServerlessSpec
-from pinecone import Pinecone
 from langchain_mistralai import MistralAIEmbeddings
-from langchain_pinecone import PineconeVectorStore
+from langchain_qdrant import QdrantVectorStore
+from qdrant_client import QdrantClient
+from qdrant_client.http.models import Distance, VectorParams
 from config import Config
 from dotenv import load_dotenv
+
 load_dotenv()
-index_name = "med-index"
+COLLECTION_NAME = "med-index"
 
 def ingest_data():
     embeddings = MistralAIEmbeddings(model=Config.EMBED_MODEL, api_key = Config.MISTRALAI_API_KEY)
@@ -20,31 +21,49 @@ def ingest_data():
     chunked_docs = splitter.split_documents(docs)
     print('chunks are created')
 
-    pc = Pinecone(api_key=Config.PINECONE_API_KEY)
+    qdrant_client = QdrantClient(
+        url=Config.QDRANT_API_URL, 
+        api_key=Config.QDRANT_API_KEY,
+    )
 
-    pc.create_index(name=index_name,
-                    dimension=1024,
-                    metric="cosine",
-                    spec=ServerlessSpec(cloud="aws", region="us-east-1"))
+    qdrant_client.create_collection(
+        collection_name=COLLECTION_NAME,
+        vectors_config=VectorParams(size=1024, distance=Distance.COSINE)
+        )
+    print(f"Collection '{COLLECTION_NAME}' created successfully!")
 
-    pinecone = PineconeVectorStore.from_documents(chunked_docs,
-                                                  embedding=embeddings,
-                                                  index_name=index_name)
+    qdrant = QdrantVectorStore.from_documents(
+        chunked_docs,
+        embeddings,
+        url= Config.QDRANT_API_URL,
+        api_key= Config.QDRANT_API_KEY,
+        collection_name=COLLECTION_NAME,
+        timeout = 6000
+    )
+    print("Data successfully ingested into Qdrant")
 
-    return pinecone
+    return qdrant
 
-
-#pinecone = ingest_data() only for the first time for ingesting data
-
+#qdrant = ingest_data() only use when who have to ingest the data for the first time
 
 def get_vector_store():
-    embeddings = MistralAIEmbeddings(model=Config.EMBED_MODEL, api_key=Config.MISTRALAI_API_KEY)
-    pc = Pinecone(api_key=Config.PINECONE_API_KEY)
-    index = pc.Index(index_name)
-    vector_store = PineconeVectorStore(index=index, embedding=embeddings)
+    embeddings = MistralAIEmbeddings(
+    model= Config.EMBED_MODEL,
+    api_key = Config.MISTRALAI_API_KEY
+    )
+
+    qdrant_client = QdrantClient(
+        url= Config.QDRANT_API_URL, 
+        api_key=Config.QDRANT_API_KEY,
+    )
+
+    vector_store = QdrantVectorStore(
+        client=qdrant_client,
+        collection_name=COLLECTION_NAME,
+        embedding=embeddings
+    )
 
     return vector_store
-
 
 if __name__ == "__main__":
     get_vector_store()

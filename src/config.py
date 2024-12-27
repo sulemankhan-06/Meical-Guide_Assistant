@@ -6,7 +6,8 @@ load_dotenv()
 
 class Config:
     MISTRALAI_API_KEY = os.getenv('MISTRALAI_API_KEY')
-    PINECONE_API_KEY = os.getenv('PINECONE_API_KEY')
+    QDRANT_API_KEY = os.getenv('QDRANT_API_KEY')
+    QDRANT_API_URL = os.getenv('QDRANT_API_URL')
 
     LLM_MODEL = "mistral-large-latest"
     EMBED_MODEL = "mistral-embed"
@@ -14,7 +15,7 @@ class Config:
     CHUNK_SIZE = 1300
     CHUNK_OVERLAP = 200
 
-    Directory_path = "/Users/user/Desktop/Medical_Guide/Guidelines_Data"
+    Directory_path = "/Users/user/Desktop/Meical-Guide_Assistant/Guidelines_Data"
 
     SYSTEM_PROMPT = (
         ''''You are a specialized Medical Guidelines Assistant powered by large language models and retrieval-augmented generation. Your purpose is to help healthcare practitioners quickly access, interpret, and apply complex medical guidelines in their clinical practice.
@@ -62,5 +63,5 @@ class Config:
         "which might reference context in the chat history, "
         "formulate a standalone question which can be understood         "
         "without the chat history. Do NOT answer the question, "
-        "just reformulate it if needed and otherwise return it            as is."
+        "just reformulate it if needed and otherwise return as it is."
     )
