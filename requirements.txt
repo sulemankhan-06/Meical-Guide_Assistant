@@ -5,3 +5,5 @@ langchain_mistralai
 langchain-qdrant
 pypdf
 streamlit
+fastapi
+uvicorn
