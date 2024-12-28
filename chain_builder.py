@@ -1,4 +1,4 @@
-from langchain_mistralai import ChatMistralAI
+from langchain_together import ChatTogether
 from utils import get_vector_store
 from config import Config
 from langchain_core.prompts import MessagesPlaceholder
@@ -11,11 +11,13 @@ load_dotenv()
 
 #LLM Configuration
 
-llm = ChatMistralAI(model=Config.LLM_MODEL,
-                    api_key=Config.MISTRALAI_API_KEY,
-                    temperature=0,
-                    timeout=600,
-                    streaming=False)
+llm = ChatTogether(
+    model=Config.LLM_MODEL,
+    api_key = Config.TOGETHER_API_KEY,
+    temperature=0,
+    max_tokens=None,
+    timeout=None,
+)
 
 vector_store_instance = get_vector_store()
 retriever = vector_store_instance.as_retriever()
