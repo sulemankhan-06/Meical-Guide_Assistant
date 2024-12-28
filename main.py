@@ -29,7 +29,7 @@ async def chat_endpoint(request: ChatRequest):
     chat_history = request.messages[:-1]
     
     # Get response from RAG
-    response = rag_query(user_message, chat_history)
+    response = rag_query(user_message, [c.model_dump() for c in chat_history])
     return {
         "role": "assistant",
         "content": response
