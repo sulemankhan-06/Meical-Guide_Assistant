@@ -1,16 +1,15 @@
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List
 from chain_builder import rag_query
-import json
 
-app = FastAPI()
+app = FastAPI(title="Medical Guidelines RAG API")
 
-# Add CORS middleware
+# Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Configure based on your frontend URL
+    allow_origins=["*"],  # Modify this in production to your specific domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -20,50 +19,27 @@ class Message(BaseModel):
     role: str
     content: str
 
-class Query(BaseModel):
-    query: str
-    chat_history: Optional[List[Message]] = None
+class ChatRequest(BaseModel):
+    messages: List[Message]
 
-@app.post("/generate")
-async def generate_response(query: Query):
-    """Non-streaming endpoint for RAG responses"""
-    # Convert chat history to list format
-    history = [{"role": msg.role, "content": msg.content} 
-              for msg in (query.chat_history or [])]
+@app.post("/chat")
+async def chat_endpoint(request: ChatRequest):
+    # Extract the last user message and chat history
+    user_message = request.messages[-1].content
+    chat_history = request.messages[:-1]
     
-    # Get response from RAG chain (non-streaming)
-    response = rag_query(query.query, history, stream=False)
-    
+    # Get response from RAG
+    response = rag_query(user_message, chat_history)
     return {
-        "answer": response['answer']
+        "role": "assistant",
+        "content": response
     }
 
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    """Streaming endpoint for RAG responses"""
-    await websocket.accept()
-    
-    try:
-        while True:
-            # Receive and parse the query
-            data = await websocket.receive_text()
-            query_data = json.loads(data)
-            
-            # Extract query and history
-            user_query = query_data.get("query", "")
-            history = query_data.get("chat_history", [])
-            
-            # Stream the response
-            for chunk in rag_query(user_query, history, stream=True):
-                await websocket.send_text(chunk)
-            
-            # Send end marker
-            await websocket.send_text("[END]")
-            
-    except Exception as e:
-        print(f"WebSocket error: {e}")
-        await websocket.close()
+# Health check endpoint
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy"}
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)

@@ -41,17 +41,10 @@ rag_chain = create_retrieval_chain(history_aware_retriever,
                                    question_answer_chain)
 
 
-def rag_query(query, chat_history=None, stream=True):
-
+def rag_query(query, chat_history=None):
     if chat_history is None:
         chat_history = []
 
     # Invoke the RAG chain
     response = rag_chain.invoke({"input": query, "chat_history": chat_history})
-    # If streaming is requested, yield words
-    if stream:
-        words = response['answer'].split()
-        for word in words:
-            yield word + ' '
-    else:
-        return {'answer': response['answer']}
+    return response['answer']
