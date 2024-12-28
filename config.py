@@ -6,11 +6,11 @@ load_dotenv()
 
 class Config:
     MISTRALAI_API_KEY = os.getenv('MISTRALAI_API_KEY')
-    TOGETHER_API_KEY = os.getenv('TOGETHER_API_KEY')
+    GROQ_API_KEY = os.getenv('GROQ_API_KEY')
     QDRANT_API_KEY = os.getenv('QDRANT_API_KEY')
     QDRANT_API_URL = os.getenv('QDRANT_API_URL')
 
-    LLM_MODEL = "meta-llama/Llama-3-70b-chat-hf"
+    LLM_MODEL = "llama-3.3-70b-versatile"
     EMBED_MODEL = "mistral-embed"
 
     CHUNK_SIZE = 1300

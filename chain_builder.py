@@ -1,4 +1,4 @@
-from langchain_together import ChatTogether
+from langchain_groq import ChatGroq
 from utils import get_vector_store
 from config import Config
 from langchain_core.prompts import MessagesPlaceholder
@@ -11,9 +11,9 @@ load_dotenv()
 
 #LLM Configuration
 
-llm = ChatTogether(
+llm = ChatGroq(
     model=Config.LLM_MODEL,
-    api_key = Config.TOGETHER_API_KEY,
+    api_key=Config.GROQ_API_KEY,
     temperature=0,
     max_tokens=None,
     timeout=None,

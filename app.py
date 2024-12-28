@@ -28,19 +28,9 @@ if prompt := st.chat_input():
     # Create a placeholder for the assistant's response
     assistant_message = st.chat_message("assistant").empty()
 
-    # Create a generator function for streaming
-    def stream_response(query, history):
-        # Get response from RAG chain
-        full_response = ""
-        for chunk in rag_query(query, history, stream=True):
-            full_response += chunk
-            words = full_response.split()
-            assistant_message.markdown(' '.join(words))
-            time.sleep(0.05)  # Small delay between words
-        return full_response
 
     # Stream the response
-    response = stream_response(prompt, st.session_state.messages)
+    response = rag_query(prompt, st.session_state.messages)
 
     # Update the final message in session state with the assistant's response
     st.session_state.messages.append({
